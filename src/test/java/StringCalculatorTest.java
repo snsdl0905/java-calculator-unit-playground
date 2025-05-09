@@ -16,6 +16,7 @@ public class StringCalculatorTest {
         assertThat(actual).isEqualTo(expected);
     }
 
+    @Test
     @DisplayName("커스텀 구분자를 사용했을 때 제대로 작동하는지 확인한다")
     void customDelimiterTest() {
         final var input = "//@\n1,3:4@5";

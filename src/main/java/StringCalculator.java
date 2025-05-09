@@ -8,27 +8,28 @@ public class StringCalculator {
 
     public int calculate(String input){
         String delimiter = DELIMITER;
-        String numbers = input;
+        String rawNumbers = input;
 
         Matcher matcher = CUSTOM_PATTERN.matcher(input);
 
         if(matcher.find()){
-            delimiter += '|' + Pattern.quote(matcher.group(1));
-            numbers = matcher.group(2);
+            String customDelimiter = Pattern.quote(matcher.group(1));
+            delimiter += '|' + customDelimiter;
+            rawNumbers = matcher.group(2);
         }
 
-        String[] numberArray = numbers.split(delimiter);
+        String[] numberArray = rawNumbers.split(delimiter);
         return addNumbers(numberArray);
     }
 
     private int addNumbers(String[] numberArray){
         return Arrays.stream(numberArray)
                 .map(String::trim)
-                .mapToInt(this::validateNumber)
+                .mapToInt(this::parseAndValidateNumber)
                 .sum();
     }
 
-    public int validateNumber(String number){
+    public int parseAndValidateNumber(String number){
         try {
             int num = Integer.parseInt(number);
             if (num < 0) {
